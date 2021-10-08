@@ -65,13 +65,13 @@ void Game::DrawPiece (int pX, int pY, int pPiece, int pRotation)
 		for (int j = 0; j < TETRIMINO_LENGTH; j++)
 		{
 			// Get the type of the block and draw it with the correct color
-			switch (pieces->GetBlockType ((Tetrimino) pPiece, (Rotation) pRotation, j, i))
+			switch (pieces->GetBlockType ((Tetrimino) pPiece, (Rotation) pRotation, i, j))
 			{
 				case 1: mColor = GREEN; break;	// For each block of the piece except the pivot
 				case 2: mColor = BLUE; break;	// For the pivot
 			}
 			
-			if (pieces->GetBlockType ((Tetrimino)pPiece, (Rotation)pRotation, j, i) != 0)
+			if (pieces->GetBlockType ((Tetrimino)pPiece, (Rotation)pRotation, i, j) != 0)
 				mIO->DrawRectangle	(mPixelsX + i * BLOCK_LENGHT, 
 									mPixelsY + j * BLOCK_LENGHT, 
 									(mPixelsX + i * BLOCK_LENGHT) + BLOCK_LENGHT - 1, 

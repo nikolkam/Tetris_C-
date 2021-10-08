@@ -283,7 +283,7 @@ Returns the Block of the specified tetrimino & rotation, x,y block axis
 @
 */
 Block Pieces::GetBlockType(Tetrimino tetrimino, Rotation rotation, int x, int y){
-    return mPieces[tetrimino][rotation][x][y];
+    return mPieces[tetrimino][rotation][y][x];
 }
 
 int Pieces::GetXInitialPosition(int pPiece, int pRotation){

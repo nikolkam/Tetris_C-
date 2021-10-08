@@ -54,7 +54,7 @@ int main(){
 				break;
             }
             case(SDLK_x):{
-                while(mBoard.IsPossibleMovement(mGame.mPosX, mGame.mPosY, mGame.tetrimino ,mGame.rotation)){ mGame.mPosY++;}
+                while(mBoard.IsPossibleMovement(mGame.mPosX, mGame.mPosY+1, mGame.tetrimino ,mGame.rotation)){ mGame.mPosY++;}
                 
                 mBoard.StorePiece(mGame.mPosX, mGame.mPosY, mGame.tetrimino, mGame.rotation);
                 mBoard.DeletePossibleLines();

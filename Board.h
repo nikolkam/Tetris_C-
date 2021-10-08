@@ -1,3 +1,16 @@
+/*
+    Tetris C++ Implementation
+    Author: Nikola Maeda
+    
+    Board class header.
+
+    This class includes general information about the board's sizes as well as Board class declaration.
+    Board class is used to keep track of the each cell on the board whether they are free/blocked.
+    It also contains functions to be used by other component of the program such getting the Pixel position, collision detection etc...
+
+*/
+
+
 #ifndef _BOARD_
 #define _BOARD_
 
@@ -21,33 +34,31 @@ struct SqreCoordinates{
 
 class Board{
     public:
-        Board(Pieces *pPieces, int pScreenHeight);
+        Board(Pieces* pieces, int screen_height);
         
         //Board getters
         int GetXPositionInPixels(int x);
         int GetYPositionInPixels(int y);
         bool IsPossibleMovement(int x, int y, int tetrimino, int rotation);
-        bool IsPossibleMovementVr2(int X, int Y, int piece, int rotation);
         bool isGameOver();
         bool isFreeBlock(int x, int y);
         SqreCoordinates getCellCoordinates(int x, int y);
 
         //Board setters
-        void StorePiece (int pX, int pY, Tetrimino pPiece, Rotation pRotation);
+        void StorePiece (int x, int y, Tetrimino piece, Rotation rotation);
         void DeletePossibleLines();
         
-        enum BLOCK{FREE = 0, FILLED = 1};
-        BLOCK board_matrix [BOARD_WIDTH][BOARD_HEIGHT]; 
+        
+        enum BLOCK{FREE = 0, FILLED = 1};                //enum to indicate whether particular block is free/ocupied
+        BLOCK board_matrix [BOARD_WIDTH][BOARD_HEIGHT];  //board matrix that manages each block in the board
 
     private:
         void initBoard();
         void DeleteLine(int y);
 
 
-            //enum parm to indicate whether block is free
-         //matrix representing board block by block
-        Pieces* pieces;
-        int screenHeight;
+        Pieces* pieces;    
+        int screenHeight; //screen height in pixels 
 };
 
 
