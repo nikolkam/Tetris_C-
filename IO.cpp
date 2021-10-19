@@ -4,7 +4,7 @@ static SDL_Surface *mScreen;										// Screen
 static Uint32 mColors [COLOR_MAX] = {0x000000ff,					// Colors
                                0xff0000ff, 0x00ff00ff, 0x0000ffff,
                                0x00ffffff, 0xff00ffff, 0xffff00ff,
-                               0xffffffff};
+                               0xffffffff, 0xffa500ff};
 
 
 IO::IO(){

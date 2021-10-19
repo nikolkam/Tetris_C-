@@ -33,7 +33,7 @@ private:
 
     int GetRand(int min, int max);
     void InitGame();
-    void DrawPiece(int x, int y, int Tetrimino, int Rotation);
+    void DrawPiece(int x, int y, Tetrimino tetrimino, Rotation rotation);
     void DrawBoard();
 };
 

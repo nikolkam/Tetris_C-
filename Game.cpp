@@ -1,6 +1,6 @@
 #include "Game.h"
 #include <stdlib.h>
-
+#include <ctime>
 #ifndef LINUX
 #include <windows.h>
 #endif
@@ -41,12 +41,22 @@ void Game::NextPiece(){
     nextRotation = Rotation::UP;
 }
 
-
+/*
+    Generates a random number between min and max (inclusive)
+    @int min : minimum range for the random number
+    @int max : maximum range for the random number
+    return @ int : random number between [min - max]
+*/
 int Game::GetRand(int min, int max){
+    srand(time(0));
     int r = rand();
     return r % (max - min + 1) + min;
 }
 
+
+/*
+    Initializes game. Sets up first and next tetrimino and rotation. 
+*/
 void Game::InitGame(){
     //current piece
     tetrimino = (Tetrimino) GetRand(0,6);
@@ -61,35 +71,48 @@ void Game::InitGame(){
     mNextPosY = 5;
 }
 
-void Game::DrawPiece (int pX, int pY, int pPiece, int pRotation)
-{
+/*
+    Given the coordinate and piece information, draws the tetrimino piece on the board.
+    @int x : Horizontal position of the piece in board matrix
+    @int y : Vertical position of the piece in board matrix
+    @Tetrimino tetrimino : Tetrimino to draw
+    @Rotation rotation : Rotation of the particular tetrimino
+*/
+void Game::DrawPiece (int x, int y, Tetrimino tetrimino, Rotation rotation){
 	Color mColor;				// Color of the block 
 
 	// Obtain the position in pixel in the screen of the block we want to draw
-	int mPixelsX = board->GetXPositionInPixels (pX);
-	int mPixelsY = board->GetYPositionInPixels (pY);
+	int pixelX = board->GetXPositionInPixels (x);
+	int pixelY = board->GetYPositionInPixels (y);
 
 	// Travel the matrix of blocks of the piece and draw the blocks that are filled
-	for (int i = 0; i < TETRIMINO_LENGTH; i++)
-	{
-		for (int j = 0; j < TETRIMINO_LENGTH; j++)
-		{
+	for (int i = 0; i < TETRIMINO_LENGTH; i++){
+		for (int j = 0; j < TETRIMINO_LENGTH; j++){
 			// Get the type of the block and draw it with the correct color
-			switch (pieces->GetBlockType ((Tetrimino) pPiece, (Rotation) pRotation, i, j))
-			{
-				case 1: mColor = GREEN; break;	// For each block of the piece except the pivot
-				case 2: mColor = BLUE; break;	// For the pivot
-			}
+			switch (tetrimino){
+				case Tetrimino::I: mColor = CYAN;        break;	// For each block of the piece except the pivot
+				case Tetrimino::SQUARE: mColor = YELLOW; break;	// For the pivot
+                case Tetrimino::T: mColor = MAGENTA;     break;
+                case Tetrimino::L: mColor = ORANGE;      break;
+                case Tetrimino::L_MIRROR: mColor = BLUE; break;
+                case Tetrimino::N: mColor = RED;       break;
+                case Tetrimino::N_MIRROR: mColor = GREEN;         break;
+
+                //enum Color {BLACK, RED, GREEN, BLUE, CYAN, MAGENTA, YELLOW, WHITE, COLOR_MAX};
+                //enum Tetrimino {SQUARE = 0, I = 1, L = 2, L_MIRROR = 3, N = 4, N_MIRROR = 5, T = 6}; //Enum encapsulating the tetrimino
+
+            }
 			
-			if (pieces->GetBlockType ((Tetrimino)pPiece, (Rotation)pRotation, i, j) != 0)
-				mIO->DrawRectangle	(mPixelsX + i * BLOCK_LENGHT, 
-									mPixelsY + j * BLOCK_LENGHT, 
-									(mPixelsX + i * BLOCK_LENGHT) + BLOCK_LENGHT - 1, 
-									(mPixelsY + j * BLOCK_LENGHT) + BLOCK_LENGHT - 1, 
+			if (pieces->GetBlockType (tetrimino, rotation, i, j) != 0)
+				mIO->DrawRectangle	(pixelX + i * BLOCK_LENGHT, 
+									pixelY + j * BLOCK_LENGHT, 
+									(pixelX + i * BLOCK_LENGHT) + BLOCK_LENGHT - 1, 
+									(pixelY + j * BLOCK_LENGHT) + BLOCK_LENGHT - 1, 
 									mColor);
 		}
 	}
 }
+
 
 void Game::DrawBoard(){
     int x_left = BOARD_CENTER - (BLOCK_LENGHT * (BOARD_WIDTH/2)) - 1;
@@ -113,6 +136,9 @@ void Game::DrawBoard(){
 
 }
 
+/*
+    Draws the whole scene including current piece, next piece and the board.
+*/
 void Game::DrawScene(){
     DrawBoard();
     DrawPiece(mPosX,mPosY,tetrimino,rotation);
