@@ -5,9 +5,16 @@
 #include <windows.h>
 #endif
 
-#include<iostream>
 
 
+
+/*
+    Game Constructor. Initializes board object, piece object, mIO object.
+    @Board pBoard : board
+    @Pieces pPieces : piece
+    @IO pIO : IO
+    @int pScreenHeight : screen height in pixels
+*/
 Game::Game(Board* pBoard, Pieces* pPieces, IO* pIO, int pScreenHeight){
     screenHeight = pScreenHeight;
 
@@ -19,6 +26,9 @@ Game::Game(Board* pBoard, Pieces* pPieces, IO* pIO, int pScreenHeight){
 
 }
 
+/*
+    Sets up a next tetrimino as well as its initial position.
+*/
 void Game::NextPiece(){
     //current piece
     tetrimino = nextTetrimino;
